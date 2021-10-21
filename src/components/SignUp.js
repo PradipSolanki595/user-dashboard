@@ -23,6 +23,7 @@ class SignUp extends Component {
         e.preventDefault();
         let userName = formData.userName
         localStorage.setItem(userName, JSON.stringify(formData))
+        localStorage.setItem('user', JSON.stringify(formData))
         const history = require("history").createBrowserHistory()
         history.push("/login")
         console.log(localStorage.getItem('user1'))
@@ -102,6 +103,7 @@ class SignUp extends Component {
                 </div>
                 <div className="form-group">
                     <button className="btn btn-primary" onClick={this.handleClick} >Submit</button>
+                    
                 </div>
             </ValidationForm>
             </div>

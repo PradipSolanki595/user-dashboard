@@ -14,12 +14,12 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount(){
-      this.getUser()
+      this.getUser(1)
     }
-     getUser = () => {
+     getUser = (page) => {
         this._isMount = true
 
-         axios.get('https://reqres.in/api/users?page=')
+         axios.get('https://reqres.in/api/users?page=' + page)
         .then((response) =>{
             if(this._isMount){
                 this.setState({items: response.data.data})
@@ -45,8 +45,9 @@ class Dashboard extends React.Component {
     }
 
     render(){
-        let {items} = this.state
-       
+        let {items} = this.state;
+        let page = 1
+       let loggeduser = JSON.parse(localStorage.getItem("user")).userName
 
         console.log(items)
         let users = items.map(item => {
@@ -77,14 +78,16 @@ class Dashboard extends React.Component {
 
             
             <div className="Main_wrapper">
+       
                 <div>
                     <div>
-                    <div className="align-right w-100 d-flex">
+                    <h4 className="text-right">Hii, {loggeduser}</h4>
+
+                    <div className="text-right w-100 d-flex">
                     <button class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModalCenter">
                         Add User
                     </button>
                     </div>
-
                         <table className="table table-bordered">
                             <thead >
                                 <tr>
@@ -107,7 +110,7 @@ class Dashboard extends React.Component {
                         pageCount={2}
                         //   marginPagesDisplayed={2}
                         //   pageRangeDisplayed={5}
-                        //   onPageChange={this.handlePageClick}
+                          onPageChange={(page)=>this.getUser(2)}
                         containerClassName={'pagination'}
                         activeClassName={'active'}
                     />
@@ -115,7 +118,9 @@ class Dashboard extends React.Component {
                 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                        <AddModel addUser = {(formData)=>this.addUser(formData)}/>
+                            <div className="modal-body">
+                                <AddModel addUser = {(formData)=>this.addUser(formData)}/>
+                            </div>
                         </div>
                     </div>
                 </div>

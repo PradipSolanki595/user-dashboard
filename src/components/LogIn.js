@@ -8,8 +8,16 @@ class LogIn extends React.Component {
 
     }
 
-    handleSubmit(e) {
+    handleSubmit(e, formData, inputs) {
         e.preventDefault();
+        let userData = JSON.parse(localStorage.getItem("user"))
+        console.log(formData)
+        if((formData.userEmail === userData.email || formData.userEmail === userData.userName) && formData.password === userData.password){
+            console.log("log in success")
+        }
+        else{
+            alert("Wrong useId or pass word")
+        }
     }
 
     handleClick (){
@@ -32,7 +40,6 @@ render (){
               <p className="mb-0"> <label htmlFor="userEmail"></label>
               <TextInput className="form-control" id="userEmail" type="text" ref="userEmail" name="userEmail" placeholder="User ID or Email" required
                minLength="4"
-               maxLength="8"
                errorMessage={{
                    minLength:"Minimum {minLength} characters is required",
                    pattern:"Your lastname is not corgi!"
